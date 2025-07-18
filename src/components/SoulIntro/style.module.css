@@ -1,0 +1,234 @@
+.container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a202c, #fbbf24, #1a202c);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: #fbbf24;
+  font-family: Georgia, serif;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.languageSelector {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 30;
+}
+
+.flag {
+  width: 40px;
+  height: 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.flag:hover,
+.flag:focus {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px #fbbf24;
+  outline: none;
+}
+
+.carouselImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
+}
+
+.carouselImageVisible {
+  opacity: 1;
+  z-index: 1;
+}
+
+.carouselImageHidden {
+  opacity: 0;
+  z-index: 0;
+}
+
+.bgImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.7));
+  transition: filter 1s ease;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  text-align: center;
+}
+
+.title {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24;
+  user-select: none;
+}
+
+.quote {
+  font-size: 20px;
+  max-width: 600px;
+  margin-bottom: 24px;
+  font-style: italic;
+  color: #fbbf24;
+}
+
+.moodButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.moodButton {
+  padding: 8px 20px;
+  border-radius: 9999px;
+  background-color: rgba(202, 138, 4, 0.7);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.moodButton:hover {
+  background-color: #fbbf24;
+  color: #1a202c;
+  transform: scale(1.15);
+  box-shadow: 0 0 10px #fbbf24;
+}
+
+.moodButtonSelected {
+  background-color: #fbbf24;
+  color: #1a202c;
+  transform: scale(1.1);
+  box-shadow: 0 0 8px #fbbf24;
+}
+
+.bounceButton {
+  margin-top: 40px;
+  cursor: pointer;
+  animation: bounce 1.5s infinite;
+  color: #fbbf24;
+  transition: color 0.3s ease;
+}
+
+.bounceButton:hover {
+  color: #f59e0b;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.slideIndicators {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+}
+
+.slideIndicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  opacity: 0.6;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.slideIndicator:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.slideIndicatorActive {
+  opacity: 1;
+  box-shadow: 0 0 10px #fbbf24;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 36px;
+  }
+  .quote {
+    font-size: 16px;
+    max-width: 90%;
+  }
+  .moodButton {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  .languageSelector {
+    top: 8px;
+    right: 8px;
+    gap: 4px;
+  }
+  .flag {
+    width: 28px;
+    height: 18px;
+  }
+}
+
+.carouselImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+}
+
+.carouselImageVisible {
+  opacity: 1;
+  z-index: 1;
+}
+
+.carouselImageHidden {
+  opacity: 0;
+  z-index: 0;
+}
+
+.bgImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
