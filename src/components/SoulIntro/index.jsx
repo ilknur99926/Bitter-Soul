@@ -46,11 +46,11 @@ const translations = {
 };
 
 const carouselImages = [
-  "https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  // Qəhvə fincanı
-  "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  // Qəhvə dənələri
-  "https://images.unsplash.com/photo-1523475496153-3f37062f9ec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  // Kitab və qəhvə
-  "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  // Səhər və qəhvə
-  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"   // Qəhvə stolu
+  "https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
+  "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  
+  "https://images.unsplash.com/photo-1523475496153-3f37062f9ec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  
+  "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  
+  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"   
 ];
 
 
