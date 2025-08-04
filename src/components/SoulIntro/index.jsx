@@ -1,127 +1,108 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import styles from './style.module.css';
 import Navbar from './Navbar';
+import { useLanguage } from '@/context/LanguageContext'; // 🔹 Kontekstdən düzgün import
 
-const emojis = ["🤔", "☕", "📚", "🌅", "🍃"];
+const emojis = ["☕", "🍂", "📖", "🌄", "🌿", "🎨", "🧘"];
 
 const translations = {
   en: {
     title: "Philosophy of Coffee",
-    moods: ["Thoughtful", "Calm", "Educational", "Inspirational", "Soothing"],
+    moods: ["Thoughtful", "Calm", "Educational", "Inspirational", "Soothing", "Creative", "Mindful"],
     quotes: [
       "The soul whispers in silence, coffee amplifies its voice.",
       "Within every cup lies an endless cosmos of untold stories.",
       "Coffee: the alchemist that turns dreams into reality.",
       "Every sip stirs a thought, every thought breathes a story.",
       "Philosophy blooms in wonder, nurtured by the warmth of coffee.",
-      "Life’s richness is in deep brews and profound reflections."
+      "Creativity begins with the aroma of a fresh brew.",
+      "Mindfulness is sipping slowly and thinking deeply."
     ],
     navbarLinks: [
-      { href: "#divardan", label: "Coffee from the Wall" },
+      { href: "#wall", label: "Wall Coffee" },
       { href: "#menu", label: "Menu" },
-      { href: "#design", label: "Coffee Design" },
       { href: "#about", label: "About Us" }
     ]
   },
   az: {
-    title: "Qəhvənin Fəlsəfəs",
-    moods: ["Düşüncəli", "Sakit", "Təlimatçı", "İlhamverici", "Ruhlandırıcı"],
+    title: "Qəhvənin Fəlsəfəsi",
+    moods: ["Düşüncəli", "Sakit", "Təlimatçı", "İlhamverici", "Ruhlandırıcı", "Yaradıcı", "Şüurlu"],
     quotes: [
       "Ruh səssizcə pıçıldayır, qəhvə onun səsini gücləndirir.",
       "Hər fincanda saysız-hesabsız nağıllar gizlidir.",
       "Qəhvə — yuxuları gerçəyə çevirən sehrbazdır.",
       "Hər yudumda bir düşüncə, hər düşüncədə bir nağıl nəfəs alır.",
       "Fəlsəfə heyranlıqda açar çiçək, qəhvə isə onun istiliyidir.",
-      "Həyatın dərinliyi — zəngin dadlarda və ruh dolu fikirlərdədir."
+      "Yaradıcılıq təzə dəmlənmiş qəhvədən başlayır.",
+      "Şüurluluq, yavaşca yudumlamaq və dərin düşünməkdir."
     ],
     navbarLinks: [
-      { href: "#divardan", label: "Divardan Qəhvə" },
+      { href: "#wall", label: "Divardan Qəhvə" },
       { href: "#menu", label: "Menyu" },
-      { href: "#design", label: "Qəhvə Dizaynı" },
       { href: "#about", label: "Haqqımızda" }
     ]
   }
 };
 
-const carouselImages = [
-  "https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-  "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  
-  "https://images.unsplash.com/photo-1523475496153-3f37062f9ec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  
-  "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",  
-  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"   
+const backgroundImages = [
+  'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
+  'https://images.unsplash.com/photo-1541167760496-1628856ab772?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
+  'https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
+  'https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
+  'https://images.unsplash.com/photo-1600431521340-491eca880813?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
 ];
 
-
 export default function SoulIntro() {
-  const [lang, setLang] = useState('az');
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedMood, setSelectedMood] = useState("");
+  const { language, setLanguage } = useLanguage();
+  const [selectedMoodIndex, setSelectedMoodIndex] = useState(0);
+  const [bgIndex, setBgIndex] = useState(0);
 
-  const { title, moods, quotes, navbarLinks } = translations[lang];
+  const { title, moods, quotes, navbarLinks } = translations[language];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+useEffect(() => {
+  const interval = setInterval(() => {
+    setBgIndex((prev) => (prev + 1) % backgroundImages.length);
+    setSelectedMoodIndex((prev) => (prev + 1) % emojis.length); 
+  }, 2000); 
 
-  function changeLanguage(newLang) {
-    setLang(newLang);
-    setSelectedMood("");  // mood sıfırla
-  }
+  return () => clearInterval(interval); 
+}, []);
+
 
   return (
-    <div className={styles.container}>
-      <Navbar lang={lang} links={navbarLinks} changeLanguage={changeLanguage} />
+    <div className="relative h-screen overflow-hidden bg-black text-white font-serif">
+      <Navbar lang={language} links={navbarLinks} changeLanguage={setLanguage} />
 
-      {carouselImages.map((image, index) => (
-        <div
-          key={index}
-          className={`${styles.carouselImage} ${index === currentSlide ? styles.carouselImageVisible : styles.carouselImageHidden}`}
-        >
-          <img src={image} alt={`Slide ${index}`} className={styles.bgImage} />
-          <div className={styles.overlay}></div>
-        </div>
-      ))}
+      <div
+        className="absolute inset-0 bg-cover bg-center brightness-110 contrast-110 transition-all duration-1000 ease-in-out"
+        style={{ backgroundImage: `url(${backgroundImages[bgIndex]})` }}
+      ></div>
 
-      <div className={styles.content}>
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.quote}>{quotes[currentSlide]}</p>
+      <div className="absolute inset-0 bg-black/20 z-20 flex flex-col justify-center items-center px-6 text-center">
+        <h1 className="text-[44px] md:text-[56px] lg:text-[72px] font-extrabold mb-6 drop-shadow-lg select-none">
+          {title}
+        </h1>
+        <p className="text-base sm:text-lg md:text-xl max-w-xl mb-8 italic leading-relaxed">
+          {selectedMoodIndex !== null ? quotes[selectedMoodIndex] : ""}
+        </p>
 
-        <div className={styles.moodButtons}>
+        <div className="flex gap-4 justify-center flex-wrap px-2 max-w-full">
           {moods.map((mood, i) => (
             <button
               key={mood}
-              onClick={() => setSelectedMood(mood)}
-              className={`${styles.moodButton} ${selectedMood === mood ? styles.moodButtonSelected : ''}`}
+              onClick={() => setSelectedMoodIndex(i)}
+              className={`flex-shrink-0 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-md flex items-center
+                ${selectedMoodIndex === i
+                  ? 'bg-yellow-400 text-black scale-105 shadow-yellow-500'
+                  : 'bg-yellow-600 text-white hover:bg-yellow-400 hover:text-black hover:scale-110 hover:shadow-yellow-500'}`}
+              style={{ minWidth: '110px' }}
             >
-              <span style={{ marginRight: '8px' }}>{emojis[i]}</span>
+              <span className="mr-2 text-xl">{emojis[i]}</span>
               {mood}
             </button>
           ))}
         </div>
-
-        <div
-          className={styles.bounceButton}
-          onClick={() => document.getElementById('daily-thought')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          <svg className={styles.downIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </div>
-
-      <div className={styles.slideIndicators}>
-        {carouselImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`${styles.slideIndicator} ${index === currentSlide ? styles.slideIndicatorActive : ''}`}
-          />
-        ))}
       </div>
     </div>
   );
