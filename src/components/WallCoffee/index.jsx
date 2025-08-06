@@ -104,21 +104,26 @@ export default function WallCoffee() {
     setGiftMode(false);
   };
 
-  const handleTake = () => {
-    if (!name || !message || coffeeData.length === 0) return;
+const handleTake = async () => {
+  if (!name || !message || coffeeData.length === 0) return;
 
-    const updated = [...coffeeData];
-    updated.shift(); 
+  const [takenCoffee, ...remaining] = coffeeData;
+  setCoffeeData(remaining);
+  setThankYouMessage(t.thanksMsg);
+  setName('');
+  setMessage('');
+  setTakeMode(false);
 
-    setCoffeeData(updated);
-    setThankYouMessage(t.thanksMsg);
-    setName('');
-    setMessage('');
-    setTakeMode(false);
+  try {
+    await fetch(`https://bitter-soul-backendd.onrender.com/api/gifts/${takenCoffee.id}`, {
+      method: 'DELETE',
+    });
+  } catch (err) {
+    console.error('Qəhvə silinmədi:', err);
+  }
 
-    setTimeout(() => setThankYouMessage(''), 2000);
-  };
-
+  setTimeout(() => setThankYouMessage(''), 2000);
+};
   return (
     <section className="bg-stone-50 min-h-screen py-20 px-4 text-center font-sans">
       <h2 className="text-4xl md:text-5xl font-bold text-stone-800 mb-3">🏯 {t.title}</h2>
