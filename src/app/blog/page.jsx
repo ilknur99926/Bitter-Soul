@@ -1,11 +1,10 @@
 'use client';
+
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
 import { useLanguage } from '@/context/LanguageContext';
-
-
+import { API_BASE_URL } from '@/config/api';
 
 const translations = {
   az: {
@@ -66,7 +65,6 @@ const categoriesEN = [
   'Daily Reflections'
 ];
 
-
 export default function BlogPage() {
   const { language } = useLanguage();
   const { user } = useAuth();
@@ -86,14 +84,9 @@ export default function BlogPage() {
   const [filterCategory, setFilterCategory] = useState('');
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (user === undefined) return;
-    if (!user) {
-      router.replace('/');
-      return;
-    }
+    if (!user) return router.replace('/');
 
-    fetch('/api/posts')
+    fetch(`${API_BASE_URL}/api/posts`)
       .then(res => res.json())
       .then(data => setPosts(data))
       .catch(err => console.error('Məqalə alınmadı:', err));
@@ -123,7 +116,7 @@ export default function BlogPage() {
     };
 
     try {
-      const res = await fetch('https://bitter-soul-backend.onrender.com/api/posts', {
+      const res = await fetch(`${API_BASE_URL}/api/posts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPost)
