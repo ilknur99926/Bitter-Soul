@@ -123,7 +123,7 @@ export default function BlogPage() {
     };
 
     try {
-      const res = await fetch('/api/posts', {
+      const res = await fetch('https://bitter-soul-backend.onrender.com/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPost)
