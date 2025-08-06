@@ -260,11 +260,14 @@ export default function Menu() {
           t={t}
           formData={formData}
           setFormData={setFormData}
-          handleOrderSubmit={handleOrderSubmit}
           setShowOrderModal={setShowOrderModal}
           setShowCartModal={setShowCartModal}
+          cart={cart}
+          setCart={setCart}
+          setOrderPlaced={setOrderPlaced}
         />
       )}
+
       {orderPlaced && <OrderSuccess t={t} />}
     </section>
   );
