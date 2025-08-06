@@ -136,32 +136,63 @@ export default function Navbar({ links }) {
             </button>
           </div>
         </div>
-        {isOpen && (
-          <div className="md:hidden">
-            <ul className="pb-4 space-y-2">
-              {links.map(({ href, label }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-              {user && (
-                <li>
-                  <a
-                    href="/blog"
-                    className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors"
-                    onClick={() => setIsOpen(false)}> Blog
-                  </a>
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
+    {isOpen && (
+  <div className="md:hidden">
+    <ul className="pb-4 space-y-2">
+      {links.map(({ href, label }) => (
+        <li key={href}>
+          <a
+            href={href}
+            className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+      {user && (
+        <li>
+          <a
+            href="/blog"
+            className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
+            Blog
+          </a>
+        </li>
+      )}
+
+      {!user && (
+        <li>
+          <button
+            onClick={() => {
+              setShowLoginModal(true);
+              setIsOpen(false);
+            }}
+            className="w-full text-left py-2 px-4 text-amber-100 hover:text-white hover:bg-amber-900/30 rounded transition"
+          >
+            👤 {login}
+          </button>
+        </li>
+      )}
+
+      {user && (
+        <li className="px-4 text-amber-100 flex justify-between items-center">
+          <span>{hello} {user.name}</span>
+          <button
+            onClick={() => {
+              setUser(null);
+              setIsOpen(false);
+            }}
+            className="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-[2px] rounded transition"
+          >
+            {logout}
+          </button>
+        </li>
+      )}
+    </ul>
+  </div>
+)}
       </div>
       {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
     </nav>
