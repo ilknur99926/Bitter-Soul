@@ -42,7 +42,7 @@ const drinks = {
   en: {
     categories: ['All', 'Hot Coffee', 'Iced Coffee', 'Tea'],
     items: [
-      { id: 1, name: 'Espresso', description: 'Strong and refreshing classic Italian coffee', ingredients: ['Pure coffee beans', 'Water'], quote: 'Thick as truth, bitter as life', price: 3.5, image: '/menu/espresso.jpg', type: 'Hot Coffee' },
+      { id: 1, name: 'Espresso', description: 'Strong and refreshing classic Italian coffee', ingredients: ['Pure coffee beans', 'Water'], quote: 'Thick as truth, bitter as life', price: 3.5, image: '/menu/espresso.png', type: 'Hot Coffee' },
       { id: 2, name: 'Cappuccino', description: 'Espresso with steamed milk and foam', ingredients: ['Espresso', 'Steamed milk'], quote: 'Perfect balance - the center of life', price: 4.5, image: '/menu/cappuccino.jpg', type: 'Hot Coffee' },
       { id: 3, name: 'Latte', description: 'Smooth and creamy coffee experience', ingredients: ['Espresso', 'Steamed milk'], quote: 'Softness is also strength', price: 4.8, image: '/menu/latte.png', type: 'Hot Coffee' },
       { id: 4, name: 'Flat White', description: 'Similar to latte but with less foam', ingredients: ['Espresso', 'Milk'], quote: 'Calmness and strength in the same cup', price: 4.6, image: '/menu/flatwhite.jpg', type: 'Hot Coffee' },

@@ -186,7 +186,7 @@ export default function Menu() {
   };
 
   return (
-    <section id="menu" className="py-20 px-4 bg-[oklch(95%_0.05_66.29)] text-[oklch(30%_0.05_66.29)] font-serif">
+    <section id="menu" className="py-20 px-4 bg-gradient-to-br from-[#fff7e6] to-[#fff0cc]  text-[oklch(30%_0.05_66.29)] font-serif">
       <h2 className="text-4xl font-bold text-center mb-8">{t.menuTitle}</h2>
       <div className="text-center italic text-sm mb-4">
         {t.suggestion} <span className="font-semibold">{suggestion}</span>

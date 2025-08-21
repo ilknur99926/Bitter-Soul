@@ -91,14 +91,12 @@ export default function BlogPage() {
       router.replace('/');
       return;
     }
-
     fetch(`${API_BASE_URL}/api/posts`)
       .then(res => res.json())
       .then(data => setPosts(data))
       .catch(err => console.error('Məqalə alınmadı:', err))
       .finally(() => setPageLoading(false));
   }, [user, loading]);
-
   const filteredPosts = posts
     .filter(p =>
       (!filterCategory || p.category === filterCategory) &&
@@ -110,10 +108,8 @@ export default function BlogPage() {
       if (sortType === 'likes') return b.likes - a.likes;
       return 0;
     });
-
   const handleAddPost = async () => {
     if (!title || !content || !category) return;
-
     const newPost = {
       author: user?.name || 'Anonim',
       title,
@@ -121,16 +117,13 @@ export default function BlogPage() {
       category,
       date: new Date().toISOString()
     };
-
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPost)
       });
-
       if (!res.ok) throw new Error('Post əlavə olunmadı');
-
       const saved = await res.json();
       setPosts([saved, ...posts]);
       setTitle('');
@@ -141,13 +134,11 @@ export default function BlogPage() {
       console.error('Xəta:', err);
     }
   };
-
   const handleLike = id => {
     setPosts(prev =>
       prev.map(p => (p.id === id ? { ...p, likes: p.likes + 1 } : p))
     );
   };
-
   const handleComment = id => {
     const comment = commentMap[id];
     if (!comment) return;
@@ -168,7 +159,21 @@ export default function BlogPage() {
       </div>
     );
   }
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, {
+        method: 'DELETE',
+      });
 
+      if (!res.ok) throw new Error('Silinmədi');
+
+      const data = await res.json();
+      console.log(data.message);
+      setPosts(prev => prev.filter(post => post.id !== id));
+    } catch (err) {
+      console.error('Xəta:', err);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1f1a17] to-[#2a221d] pt-24 pb-16 px-4 text-white font-serif">
       <div className="max-w-5xl mx-auto space-y-10">
@@ -184,37 +189,82 @@ export default function BlogPage() {
           <h1 className="text-4xl font-bold mb-2">{t.blogTitle}</h1>
           <p className="text-lg text-amber-200">{t.blogSubtitle}</p>
         </div>
-     <div className="flex flex-wrap justify-center gap-4">
-          <button onClick={() => setShowForm(prev => !prev)} className="btn">{t.newPost}</button>
-          <button onClick={() => setSortType('date')} className="btn-secondary">{t.sortByDate}</button>
-          <button onClick={() => setSortType('likes')} className="btn-secondary">{t.sortByLikes}</button>
-          <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="rounded px-3 py-2 text-black">
+        <div className="flex flex-wrap justify-center gap-4">
+          <button
+            onClick={() => setShowForm(prev => !prev)}
+            className="px-4 py-2 rounded border border-amber-300 bg-stone-800 text-white hover:bg-stone-700 transition"
+          >
+            {t.newPost}
+          </button>
+
+          <button
+            onClick={() => setSortType('date')}
+            className={`px-4 py-2 rounded border transition ${sortType === 'date'
+              ? 'bg-stone-800 text-white border-amber-600'
+              : 'bg-stone-800 text-white border-amber-300 hover:bg-stone-700'
+              }`}
+          >
+            {t.sortByDate}
+          </button>
+
+          <button
+            onClick={() => setSortType('likes')}
+            className={`px-4 py-2 rounded border transition ${sortType === 'likes'
+              ? 'bg-amber-600 text-black border-amber-600'
+              : 'bg-stone-800 text-white border-amber-300 hover:bg-stone-700'
+              }`}
+          >
+            {t.sortByLikes}
+          </button>
+          <select
+            value={filterCategory}
+            onChange={(e) => setFilterCategory(e.target.value)}
+            className="rounded px-3 py-2 bg-stone-800 text-white border border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          >
             <option value=''>{t.allCategories}</option>
             {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
           </select>
+
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t.placeholderSearch}
-            className="rounded px-3 py-2 text-black"
+            className="rounded px-3 py-2 bg-stone-800 text-white border border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
-        </div>
 
+        </div>
         {showForm && (
           <div className="bg-white/90 text-black p-6 rounded-xl space-y-4 shadow-lg">
-            <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t.placeholderTitle} className="w-full p-2 rounded border" />
-            <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 rounded border">
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={t.placeholderTitle}
+              className="w-full p-2 rounded border border-amber-300 bg-stone-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+            />
+
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full p-2 rounded border border-amber-300 bg-stone-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+            >
               <option value="">{t.selectCategory}</option>
               {categories.map(cat => <option key={cat}>{cat}</option>)}
             </select>
-            <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder={t.placeholderContent} rows={5} className="w-full p-2 rounded border"></textarea>
+
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder={t.placeholderContent}
+              rows={5}
+              className="w-full p-2 rounded border border-amber-300 bg-stone-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+            />
+
             <div className="flex justify-end gap-4">
               <button onClick={handleAddPost} className="bg-amber-600 text-white px-4 py-2 rounded">{t.share}</button>
               <button onClick={() => setShowForm(false)} className="bg-gray-400 text-white px-4 py-2 rounded">{t.cancel}</button>
             </div>
           </div>
         )}
-
         {filteredPosts.length === 0 ? (
           <p className="text-center text-amber-300">{t.noPosts}</p>
         ) : (
@@ -229,7 +279,6 @@ export default function BlogPage() {
                   <span className="bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full">{post.category}</span>
                 </div>
                 <p className="whitespace-pre-line text-stone-100 mb-4">{post.content}</p>
-
                 <div className="flex gap-4 text-sm mb-4">
                   <button onClick={() => handleLike(post.id)} className="px-3 py-1 border border-amber-500 text-amber-500 rounded hover:bg-amber-500 hover:text-black transition">❤️ {post.likes}</button>
                   <button onClick={() => setCommentMap(prev => ({ ...prev, [post.id]: prev[post.id] ?? '' }))} className="px-3 py-1 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition">💬 {post.comments.length} {t.comment}</button>
@@ -242,14 +291,13 @@ export default function BlogPage() {
                     </div>
                   ))}
                 </div>
-
                 <div className="mt-3 flex gap-2">
                   <input
                     type="text"
                     value={commentMap[post.id] || ''}
                     onChange={(e) => setCommentMap({ ...commentMap, [post.id]: e.target.value })}
                     placeholder={t.writeComment}
-                    className="flex-1 px-3 py-2 rounded bg-amber-50 text-black"
+                    className="flex-1 px-3 py-2 rounded bg-stone-800 text-white border border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400"
                   />
                   <button
                     onClick={() => handleComment(post.id)}

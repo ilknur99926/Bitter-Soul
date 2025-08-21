@@ -19,17 +19,30 @@ export default function OrderModal({
     e.preventDefault();
     const { name, email, phone, address } = formData;
 
-    if (!name || !email || !phone || !address || !validateEmail(email) || !validatePhone(phone)) return;
+if (!name || !email || !phone || !address || !validateEmail(email) || !validatePhone(phone)) {
+  console.log('Validation failed:', { name, email, phone, address });
+  alert('Zəhmət olmasa bütün sahələri düzgün doldurun.');
+  return;
+}
 
-    try {
-      await fetch('https://bitter-soul-backendd.onrender.com/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, cart })
-      });
-    } catch (err) {
-      console.error('Sifariş göndərilə bilmədi:', err);
-    }
+
+ try {
+  const res = await fetch('https://bitter-soul-backend.onrender.com/api/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...formData, cart })
+  });
+
+  if (!res.ok) {
+    console.error('Server error:', res.status);
+    alert('Sifarişi göndərmək alınmadı. Server cavabı: ' + res.status);
+    return;
+  }
+} catch (err) {
+  console.error('Sifariş göndərilə bilmədi:', err);
+  alert('Sifarişi göndərmək zamanı xəta baş verdi.');
+  return;
+}
 
     setShowOrderModal(false);
     setTimeout(() => {

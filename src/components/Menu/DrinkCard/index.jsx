@@ -40,7 +40,7 @@ export default function DrinkCard({
       </div>
 
       {/* Şəkil */}
-      <div className="relative w-full h-64">
+      <div className="relative w-full h-60">
         <Image
           src={item.image}
           alt={item.name}

@@ -24,10 +24,13 @@ export default function Navbar({ links }) {
     }
   };
   const { login, logout, hello } = content[language];
+
   return (
     <nav className="fixed top-0 w-full bg-[rgba(30,25,20,0.98)] backdrop-blur-md shadow-lg z-[9999] border-b border-amber-900/30">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20 py-2">
+
+          {/* LOGO - DƏYİŞMƏ! */}
           <div className="flex items-center flex-shrink-0">
             <div className="flex items-center flex-shrink-0">
               <div className="w-30 h-18 mb-4">
@@ -62,30 +65,28 @@ export default function Navbar({ links }) {
               </div>
             </div>
           </div>
+
+          {/* MENU + FLAGS (MD ÜSTÜ) */}
           <div className="hidden md:flex justify-center flex-1 items-center gap-10">
             <ul className="flex gap-15">
               {links.map(({ href, label }) => (
                 <li key={href}>
-                  <a
-                    href={href}
-                    className="text-amber-100 font-medium transition-colors hover:text-amber-300"
-                  >
+                  <a href={href} className="text-amber-100 font-medium transition-colors hover:text-amber-300">
                     {label}
                   </a>
                 </li>
               ))}
               {user && (
                 <li>
-                  <a
-                    href="/blog"
-                    className="text-amber-100 font-medium transition-colors hover:text-amber-300"
-                  >
+                  <a href="/blog" className="text-amber-100 font-medium transition-colors hover:text-amber-300">
                     Blog
                   </a>
                 </li>
               )}
             </ul>
           </div>
+
+          {/* FLAGS + LOGIN (MD ÜSTÜ) */}
           <div className="hidden md:flex items-center gap-8">
             <div className="flex gap-2">
               <button onClick={() => setLanguage('az')} className="rounded border border-transparent hover:border-amber-600 transition-colors">
@@ -96,26 +97,21 @@ export default function Navbar({ links }) {
               </button>
             </div>
             {!user ? (
-              <button
-                onClick={() => setShowLoginModal(true)}
-                className="flex items-center gap-1 px-3 py-1 rounded-full bg-amber-700/30 hover:bg-amber-600/40 text-amber-100 hover:text-white transition"
-              >
+              <button onClick={() => setShowLoginModal(true)} className="flex items-center gap-1 px-3 py-1 rounded-full bg-amber-700/30 hover:bg-amber-600/40 text-amber-100 hover:text-white transition">
                 <span className="text-lg">👤</span>
                 <span className="font-medium">{login}</span>
               </button>
             ) : (
               <div className="flex items-center gap-3 bg-amber-700/30 px-4 py-1 rounded-full text-amber-100">
                 <span className="text-sm">{hello} {user.name}</span>
-                <button
-                  onClick={() => setUser(null)}
-                  className="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-[2px] rounded transition"
-                >
+                <button onClick={() => setUser(null)} className="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-[2px] rounded transition">
                   {logout}
                 </button>
-
               </div>
             )}
           </div>
+
+          {/* MOBIL: FLAGS + MENU */}
           <div className="md:hidden flex items-center gap-4">
             <div className="flex gap-2">
               <button onClick={() => setLanguage('az')} className="rounded border border-transparent hover:border-amber-600 transition-colors">
@@ -136,63 +132,43 @@ export default function Navbar({ links }) {
             </button>
           </div>
         </div>
-    {isOpen && (
-  <div className="md:hidden">
-    <ul className="pb-4 space-y-2">
-      {links.map(({ href, label }) => (
-        <li key={href}>
-          <a
-            href={href}
-            className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors"
-            onClick={() => setIsOpen(false)}
-          >
-            {label}
-          </a>
-        </li>
-      ))}
-      {user && (
-        <li>
-          <a
-            href="/blog"
-            className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors"
-            onClick={() => setIsOpen(false)}
-          >
-            Blog
-          </a>
-        </li>
-      )}
 
-      {!user && (
-        <li>
-          <button
-            onClick={() => {
-              setShowLoginModal(true);
-              setIsOpen(false);
-            }}
-            className="w-full text-left py-2 px-4 text-amber-100 hover:text-white hover:bg-amber-900/30 rounded transition"
-          >
-            👤 {login}
-          </button>
-        </li>
-      )}
-
-      {user && (
-        <li className="px-4 text-amber-100 flex justify-between items-center">
-          <span>{hello} {user.name}</span>
-          <button
-            onClick={() => {
-              setUser(null);
-              setIsOpen(false);
-            }}
-            className="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-[2px] rounded transition"
-          >
-            {logout}
-          </button>
-        </li>
-      )}
-    </ul>
-  </div>
-)}
+        {/* MOBIL MENYU */}
+        {isOpen && (
+          <div className="md:hidden">
+            <ul className="pb-4 space-y-2">
+              {links.map(({ href, label }) => (
+                <li key={href}>
+                  <a href={href} className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors" onClick={() => setIsOpen(false)}>
+                    {label}
+                  </a>
+                </li>
+              ))}
+              {user && (
+                <li>
+                  <a href="/blog" className="block py-2 px-4 text-amber-100 no-underline hover:text-amber-300 hover:bg-amber-900/30 rounded transition-colors" onClick={() => setIsOpen(false)}>
+                    Blog
+                  </a>
+                </li>
+              )}
+              {!user && (
+                <li>
+                  <button onClick={() => { setShowLoginModal(true); setIsOpen(false); }} className="w-full text-left py-2 px-4 text-amber-100 hover:text-white hover:bg-amber-900/30 rounded transition">
+                    👤 {login}
+                  </button>
+                </li>
+              )}
+              {user && (
+                <li className="px-4 text-amber-100 flex justify-between items-center">
+                  <span>{hello} {user.name}</span>
+                  <button onClick={() => { setUser(null); setIsOpen(false); }} className="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-[2px] rounded transition">
+                    {logout}
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
       {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
     </nav>

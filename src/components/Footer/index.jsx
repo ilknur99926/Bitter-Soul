@@ -78,7 +78,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="bg-[rgba(30,25,20,0.98)] backdrop-blur-md shadow-lg z-[9999] border-b border-amber-900/30 text-white px-6 pt-12 pb-6 text-sm font-serif relative fade-in transition-opacity duration-1000"
+      className="bg-[rgba(30,25,20,0.98)] backdrop-blur-md shadow-lg z-[9999] border-b border-amber-900/30 text-amber-100 px-6 pt-12 pb-6 text-sm font-serif relative fade-in transition-opacity duration-1000"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
 
