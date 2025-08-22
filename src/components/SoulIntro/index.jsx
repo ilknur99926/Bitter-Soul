@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Navbar from './Navbar';
 import { useLanguage } from '@/context/LanguageContext';
@@ -59,15 +59,17 @@ const backgroundImages = [
 export default function SoulIntro() {
   const { language, setLanguage } = useLanguage();
   const [selectedMoodIndex, setSelectedMoodIndex] = useState(0);
-  const [bgIndex, setBgIndex] = useState(0);
+  const [index, setIndex] = useState(0);
+  const autoRef = useRef(null);
 
   const { title, moods, quotes, navbarLinks } = translations[language];
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % backgroundImages.length);
+    autoRef.current = setInterval(() => {
+      setIndex((prev) => (prev + 1) % backgroundImages.length);
       setSelectedMoodIndex((prev) => (prev + 1) % emojis.length);
     }, 3000);
-    return () => clearInterval(interval);
+    return () => clearInterval(autoRef.current);
   }, []);
 
   return (
@@ -80,30 +82,21 @@ export default function SoulIntro() {
             key={src}
             className={[
               "absolute inset-0 transition-opacity duration-700 ease-in-out",
-              i === bgIndex ? "opacity-100" : "opacity-0"
+              i === index ? "opacity-100" : "opacity-0"
             ].join(" ")}
           >
             <Image
               src={src}
-              alt={`bg fill ${i}`}
-              fill
-              sizes="200vw"
-              className="object-cover blur-md scale-110"
-              priority={i === 0}
-            />
-            <Image
-              src={src}
-              alt={`bg main ${i}`}
-              fill
+              alt={`slide ${i + 1}`}
+              width={1820}
+              height={1080}
               sizes="100vw"
-              className="object-contain scale-x-150"
+              className="object-cover w-full h-full"
               priority={i === 0}
+              quality={100}
             />
-
           </div>
         ))}
-
-        <div className="absolute inset-0 bg-black/30" />
       </div>
       <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center">
         <h1 className="text-[44px] md:text-[56px] lg:text-[72px] font-extrabold mb-6 drop-shadow-lg select-none">
@@ -113,7 +106,7 @@ export default function SoulIntro() {
           {quotes[selectedMoodIndex]}
         </p>
 
-        <div className="flex gap-4 justify-center flex-wrap px-2 max-w-full">
+        <div className="flex gap-4 justify-center flex-wrap px-2 max-w-full mb-8">
           {moods.map((mood, i) => (
             <button
               key={mood}
