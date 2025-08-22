@@ -5,7 +5,7 @@ const path = require('path');
 
 const postsFile = path.join(__dirname, '../data/posts.json');
 
-//  Bütün postları al
+
 router.get('/', (req, res) => {
   try {
     const posts = JSON.parse(fs.readFileSync(postsFile, 'utf-8'));
@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
   }
 });
 
-//  Yeni post əlavə et
 router.post('/', (req, res) => {
   const { title, content, category, author, date } = req.body;
 

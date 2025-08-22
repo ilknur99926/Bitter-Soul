@@ -30,7 +30,6 @@ export default function Navbar({ links }) {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20 py-2">
 
-          {/* LOGO - DƏYİŞMƏ! */}
           <div className="flex items-center flex-shrink-0">
             <div className="flex items-center flex-shrink-0">
               <div className="w-30 h-18 mb-4">
@@ -66,7 +65,6 @@ export default function Navbar({ links }) {
             </div>
           </div>
 
-          {/* MENU + FLAGS (MD ÜSTÜ) */}
           <div className="hidden md:flex justify-center flex-1 items-center gap-10">
             <ul className="flex gap-15">
               {links.map(({ href, label }) => (
@@ -85,8 +83,6 @@ export default function Navbar({ links }) {
               )}
             </ul>
           </div>
-
-          {/* FLAGS + LOGIN (MD ÜSTÜ) */}
           <div className="hidden md:flex items-center gap-8">
             <div className="flex gap-2">
               <button onClick={() => setLanguage('az')} className="rounded border border-transparent hover:border-amber-600 transition-colors">
@@ -111,7 +107,6 @@ export default function Navbar({ links }) {
             )}
           </div>
 
-          {/* MOBIL: FLAGS + MENU */}
           <div className="md:hidden flex items-center gap-4">
             <div className="flex gap-2">
               <button onClick={() => setLanguage('az')} className="rounded border border-transparent hover:border-amber-600 transition-colors">
@@ -133,7 +128,6 @@ export default function Navbar({ links }) {
           </div>
         </div>
 
-        {/* MOBIL MENYU */}
         {isOpen && (
           <div className="md:hidden">
             <ul className="pb-4 space-y-2">

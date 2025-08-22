@@ -13,31 +13,21 @@ router.post('/register', async (req, res) => {
     router.post('/login', async (req, res) => {
         const { email, password } = req.body;
 
-        // 1. Email və şifrə boş olmamalıdır
         if (!email || !password) {
             return res.status(400).json({ message: 'Email və şifrə tələb olunur' });
         }
-
-        // 2. İstifadəçilər faylını oxuyuruq
         const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
-
-        // 3. İstifadəçini tapırıq
         const user = users.find((u) => u.email === email);
 
         if (!user) {
             return res.status(404).json({ message: 'İstifadəçi tapılmadı' });
         }
-
-        // 4. Şifrəni yoxlayırıq
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(401).json({ message: 'Şifrə yanlışdır' });
         }
-
-
         const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '7d' });
-
         res.status(200).json({ token, user: { email: user.email } });
     });
 
