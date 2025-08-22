@@ -6,9 +6,8 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // 🔹 user-in localStorage-dan yüklənmə statusu
+  const [loading, setLoading] = useState(true); 
 
-  // İlk dəfə səhifə yüklənəndə localStorage-dan user məlumatını oxu
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem('user');
@@ -18,11 +17,11 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.error('User məlumatı oxunarkən xəta:', err);
     } finally {
-      setLoading(false); // ✅ Yükləmə tamamlandı
+      setLoading(false); 
     }
   }, []);
 
-  // user dəyişəndə localStorage-a yaz
+
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));

@@ -17,14 +17,11 @@ export default function DrinkCard({
       onClick={() => setSelectedItem(item)}
       className="relative bg-white/80 backdrop-blur-md rounded-xl shadow-xl overflow-hidden cursor-pointer transition-transform hover:scale-[1.01]"
     >
-      {/* Bestseller etiketi */}
       {item.bestseller && (
         <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 z-10">
           <FaFire className="text-yellow-300" /> Ən çox satılan
         </div>
       )}
-
-      {/*Sevimli ikon */}
       <div
         onClick={(e) => {
           e.stopPropagation();
@@ -38,8 +35,6 @@ export default function DrinkCard({
           <FaRegHeart className="text-gray-400 hover:text-red-500 transition-colors" />
         )}
       </div>
-
-      {/* Şəkil */}
       <div className="relative w-full h-60">
         <Image
           src={item.image}
@@ -48,8 +43,6 @@ export default function DrinkCard({
           className="object-cover"
         />
       </div>
-
-      {/*  Mətn hissəsi */}
       <div className="p-5">
         <h3 className="text-2xl font-bold mb-1">{item.name}</h3>
         <p className="text-sm italic mb-3">"{item.quote}"</p>
@@ -75,8 +68,6 @@ export default function DrinkCard({
             />
           ))}
         </div>
-
-        {/*  Qiymət və səbətə at düyməsi */}
         <div className="flex justify-between items-center">
           <span className="text-lg font-semibold">
             {item.price.toFixed(2)} ₼

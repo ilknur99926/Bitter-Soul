@@ -10,47 +10,92 @@ export default function CartModal({
   removeFromCart,
 }) {
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-      <div className="bg-[oklch(95%_0.1_30)] text-[oklch(25%_0.1_20)] rounded-xl p-6 w-full max-w-md shadow-xl relative">
-        <button onClick={() => setShowCartModal(false)} className="absolute top-2 right-3 text-xl font-bold">✕</button>
-        <h3 className="text-2xl font-bold mb-4">🛒 {t.cart}</h3>
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+      <div className="bg-gradient-to-br from-[#3b2f2f] to-[#2a1f1f] text-amber-100 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+        {/* Close button */}
+        <button
+          onClick={() => setShowCartModal(false)}
+          className="absolute top-3 right-3 text-xl font-bold text-amber-300 hover:text-red-400 transition"
+        >
+          ✕
+        </button>
+
+        <h3 className="text-2xl font-extrabold mb-6 text-center">🛒 {t.cart}</h3>
+
         {cart.length === 0 ? (
-          <p>{t.emptyCart}</p>
+          <p className="text-center italic">{t.emptyCart}</p>
         ) : (
           <>
-            <ul className="space-y-3 mb-4">
+            {/* Cart items */}
+            <ul className="space-y-4 mb-6">
               {cart.map((item, index) => (
-                <li key={index} className="flex justify-between items-center border-b pb-2">
+                <li
+                  key={index}
+                  className="flex justify-between items-center border-b border-amber-800 pb-3"
+                >
                   <div>
-                    <h4 className="font-semibold">{item.name}</h4>
-                    <div className="text-sm">{item.quantity} × {item.price.toFixed(2)} ₼</div>
+                    <h4 className="font-semibold text-lg">{item.name}</h4>
+                    <div className="text-sm text-amber-300">
+                      {item.quantity} × {item.price.toFixed(2)} ₼
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => decreaseQuantity(index)} className="px-2 bg-gray-200 rounded">-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => increaseQuantity(index)} className="px-2 bg-gray-200 rounded">+</button>
-                    <button onClick={() => removeFromCart(index)} className="text-red-500">✕</button>
+                    <button
+                      onClick={() => decreaseQuantity(index)}
+                      className="w-8 h-8 flex items-center justify-center bg-amber-700 hover:bg-amber-600 text-white rounded-full transition"
+                    >
+                      -
+                    </button>
+                    <span className="font-bold">{item.quantity}</span>
+                    <button
+                      onClick={() => increaseQuantity(index)}
+                      className="w-8 h-8 flex items-center justify-center bg-amber-700 hover:bg-amber-600 text-white rounded-full transition"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => removeFromCart(index)}
+                      className="ml-2 text-red-400 hover:text-red-600 transition"
+                    >
+                      ✕
+                    </button>
                   </div>
                 </li>
               ))}
             </ul>
-            {formData.delivery === 'delivery' && (
-              <div className="flex justify-between mb-2">
+
+            {/* Delivery info */}
+            {formData.delivery === "delivery" && (
+              <div className="flex justify-between mb-3 text-amber-200">
                 <span>{t.delivery}</span>
                 <span>+2.00 ₼</span>
               </div>
             )}
-            <div className="flex justify-between items-center mb-4">
-              <span className="font-bold text-lg">{t.total}</span>
-              <span className="text-lg font-semibold">{totalPrice.toFixed(2)} ₼</span>
+
+            {/* Total */}
+            <div className="flex justify-between items-center mb-6 text-lg">
+              <span className="font-bold">{t.total}</span>
+              <span className="text-xl font-extrabold text-amber-400">
+                {totalPrice.toFixed(2)} ₼
+              </span>
             </div>
           </>
         )}
-        <div className="flex justify-between">
-          <button onClick={() => setShowCartModal(false)} className="px-4 py-2 bg-gray-300 rounded">{t.continue}</button>
+
+        {/* Action buttons */}
+        <div className="flex justify-between gap-3">
           <button
-            onClick={() => { setShowCartModal(false); setShowOrderModal(true); }}
-            className="px-4 py-2 bg-green-600 text-white rounded"
+            onClick={() => setShowCartModal(false)}
+            className="flex-1 py-2 bg-stone-600 hover:bg-stone-500 text-white rounded-lg shadow transition"
+          >
+            {t.continue}
+          </button>
+          <button
+            onClick={() => {
+              setShowCartModal(false);
+              setShowOrderModal(true);
+            }}
+            className="flex-1 py-2 bg-amber-600 hover:bg-amber-500 text-black font-semibold rounded-lg shadow transition disabled:opacity-50"
             disabled={cart.length === 0}
           >
             {t.order}

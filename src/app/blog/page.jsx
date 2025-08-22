@@ -152,13 +152,15 @@ export default function BlogPage() {
     setCommentMap({ ...commentMap, [id]: '' });
   };
 
-  if (loading || pageLoading) {
-    return (
-      <div className="h-screen flex items-center justify-center text-white text-lg font-semibold">
-        Yüklənir...
-      </div>
-    );
-  }
+if (loading) {
+  return (
+    <div className="h-screen flex items-center justify-center text-white text-lg font-semibold">
+      Yüklənir...
+    </div>
+  );
+}
+
+
   const handleDelete = async (id) => {
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, {

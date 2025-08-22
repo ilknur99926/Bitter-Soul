@@ -134,7 +134,7 @@ export default function Footer() {
           </ul>
         </div>
 
- 
+
         <div>
           <h4 className="font-semibold mb-4 text-yellow-100">{t.contact.title}</h4>
           <ul className="space-y-2">
@@ -145,7 +145,7 @@ export default function Footer() {
           </ul>
         </div>
 
-  
+
         <div>
           <h4 className="font-semibold mb-4 text-yellow-100">{t.newsletter.title}</h4>
           <p className="mb-3">{t.newsletter.desc}</p>
@@ -158,18 +158,12 @@ export default function Footer() {
               className="px-3 py-2 rounded-l-md bg-[#9b4700] text-white placeholder-yellow-300 focus:outline-none"
             />
             <button
-              onClick={() => {
-                if (!email.trim()) {
-                  setMessage(t.newsletter.emptyError);
-                } else {
-                  setMessage(t.newsletter.success);
-                  setEmail('');
-                }
-              }}
-              className="px-4 bg-orange-500 hover:bg-orange-600 text-white rounded-r-md"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="fixed bottom-6 right-6 bg-orange-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-orange-600 transition-opacity duration-500 animate-fade-in z-50"
             >
-              {t.newsletter.button}
+              ⬆ {t.backToTop}
             </button>
+
           </div>
           {message && <p className="mt-2 text-xs text-yellow-300">{message}</p>}
         </div>
@@ -182,11 +176,11 @@ export default function Footer() {
         </p>
       </div>
 
- 
+
       {showScrollBtn && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-orange-600 transition-opacity duration-500 animate-fade-in z-50"
+          className="fixed bottom-6 right-6 bg-orange-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-orange-600 transition-opacity duration-500 animate-fade-in z-50"
         >
           ⬆ {t.backToTop}
         </button>

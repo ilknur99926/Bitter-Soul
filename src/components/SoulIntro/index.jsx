@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Navbar from './Navbar';
-import { useLanguage } from '@/context/LanguageContext'; // 🔹 Kontekstdən düzgün import
+import { useLanguage } from '@/context/LanguageContext';
 
 const emojis = ["☕", "🍂", "📖", "🌄", "🌿", "🎨", "🧘"];
 
@@ -46,11 +47,13 @@ const translations = {
 };
 
 const backgroundImages = [
-  'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1541167760496-1628856ab772?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1600431521340-491eca880813?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80',
+  '/slider/Cofee1.jpg',
+  '/slider/Cofee2.jpg',
+  '/slider/Cofee3.jpg',
+  '/slider/Cofee4.jpg',
+  '/slider/Cofee5.jpg',
+  '/slider/Cofee6.jpg',
+  '/slider/Cofee7.jpg',
 ];
 
 export default function SoulIntro() {
@@ -59,32 +62,55 @@ export default function SoulIntro() {
   const [bgIndex, setBgIndex] = useState(0);
 
   const { title, moods, quotes, navbarLinks } = translations[language];
-
-useEffect(() => {
-  const interval = setInterval(() => {
-    setBgIndex((prev) => (prev + 1) % backgroundImages.length);
-    setSelectedMoodIndex((prev) => (prev + 1) % emojis.length); 
-  }, 2000); 
-
-  return () => clearInterval(interval); 
-}, []);
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % backgroundImages.length);
+      setSelectedMoodIndex((prev) => (prev + 1) % emojis.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="relative h-screen overflow-hidden bg-black text-white font-serif">
       <Navbar lang={language} links={navbarLinks} changeLanguage={setLanguage} />
 
-      <div
-        className="absolute inset-0 bg-cover bg-center brightness-110 contrast-110 transition-all duration-1000 ease-in-out"
-        style={{ backgroundImage: `url(${backgroundImages[bgIndex]})` }}
-      ></div>
+      <div className="absolute inset-0">
+        {backgroundImages.map((src, i) => (
+          <div
+            key={src}
+            className={[
+              "absolute inset-0 transition-opacity duration-700 ease-in-out",
+              i === bgIndex ? "opacity-100" : "opacity-0"
+            ].join(" ")}
+          >
+            <Image
+              src={src}
+              alt={`bg fill ${i}`}
+              fill
+              sizes="200vw"
+              className="object-cover blur-md scale-110"
+              priority={i === 0}
+            />
+            <Image
+              src={src}
+              alt={`bg main ${i}`}
+              fill
+              sizes="100vw"
+              className="object-contain scale-x-150"
+              priority={i === 0}
+            />
 
-      <div className="absolute inset-0 bg-black/20 z-20 flex flex-col justify-center items-center px-6 text-center">
+          </div>
+        ))}
+
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
+      <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center">
         <h1 className="text-[44px] md:text-[56px] lg:text-[72px] font-extrabold mb-6 drop-shadow-lg select-none">
           {title}
         </h1>
         <p className="text-base sm:text-lg md:text-xl max-w-xl mb-8 italic leading-relaxed">
-          {selectedMoodIndex !== null ? quotes[selectedMoodIndex] : ""}
+          {quotes[selectedMoodIndex]}
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap px-2 max-w-full">
@@ -92,11 +118,13 @@ useEffect(() => {
             <button
               key={mood}
               onClick={() => setSelectedMoodIndex(i)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-md flex items-center
-                ${selectedMoodIndex === i
-                  ? 'bg-yellow-400 text-black scale-105 shadow-yellow-500'
-                  : 'bg-yellow-600 text-white hover:bg-yellow-400 hover:text-black hover:scale-110 hover:shadow-yellow-500'}`}
-              style={{ minWidth: '110px' }}
+              className={[
+                "flex-shrink-0 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-md flex items-center",
+                selectedMoodIndex === i
+                  ? "bg-yellow-400 text-black scale-105 shadow-yellow-500"
+                  : "bg-yellow-600 text-white hover:bg-yellow-400 hover:text-black hover:scale-110 hover:shadow-yellow-500"
+              ].join(" ")}
+              style={{ minWidth: "110px" }}
             >
               <span className="mr-2 text-xl">{emojis[i]}</span>
               {mood}

@@ -64,7 +64,7 @@ const drinks = {
       { id: 19, name: 'Vanilla Iced Coffee', description: 'Vanilla flavored iced coffee', ingredients: ['Espresso', 'Vanilla syrup', 'Ice'], quote: 'Subtle taste, calm feeling', price: 4.9, image: '/menu/vanillaiced.jpg', type: 'Iced Coffee' },
       { id: 20, name: 'Caramel Iced Coffee', description: 'Combination of caramel and coffee', ingredients: ['Espresso', 'Caramel syrup', 'Milk', 'Ice'], quote: 'Sweet and refreshing', price: 5.0, image: '/menu/carameliced.jpg', type: 'Iced Coffee' },
 
-      // Teas
+
       { id: 21, name: 'Green Tea', description: 'Cleansing and relaxing drink', ingredients: ['Green tea leaves'], quote: 'Cleanliness starts from within', price: 3.2, image: '/menu/greentea.jpg', type: 'Tea' },
       { id: 22, name: 'Earl Grey', description: 'Black tea with bergamot aroma', ingredients: ['Black tea', 'Bergamot'], quote: 'Change is necessary', price: 3.5, image: '/menu/earlgrey.jpg', type: 'Tea' },
       { id: 23, name: 'Chamomile Tea', description: 'Soothing and relaxing', ingredients: ['Chamomile'], quote: 'Calmness is in a cup', price: 3.0, image: '/menu/chamomile.jpg', type: 'Tea' },
